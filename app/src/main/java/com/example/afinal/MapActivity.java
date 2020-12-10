@@ -23,7 +23,7 @@ public class MapActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
                         Toast.makeText(MapActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        Intent MainIntent = new Intent(MapActivity.this, MainActivity.class);
+                        Intent MainIntent = new Intent(MapActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites:

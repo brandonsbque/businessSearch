@@ -23,7 +23,7 @@ public class BusinessActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
                         Toast.makeText(BusinessActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        Intent MainIntent = new Intent(BusinessActivity.this, MainActivity.class);
+                        Intent MainIntent = new Intent(BusinessActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites:
