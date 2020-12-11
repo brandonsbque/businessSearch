@@ -17,6 +17,7 @@ public class BusinessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.action_favorites);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -35,6 +36,11 @@ public class BusinessActivity extends AppCompatActivity {
                         Toast.makeText(BusinessActivity.this, "Map", Toast.LENGTH_SHORT).show();
                         Intent mapIntent = new Intent(BusinessActivity.this, MapActivity.class);
                         startActivity(mapIntent);
+                        break;
+                    case R.id.action_favorite:
+                        Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        Intent favoritesIntent = new Intent(BusinessActivity.this, FavoriteActivity.class);
+                        startActivity(favoritesIntent);
                         break;
                 }
                 return true;

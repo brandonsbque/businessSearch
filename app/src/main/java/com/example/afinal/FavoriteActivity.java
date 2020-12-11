@@ -10,36 +10,37 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MapActivity extends AppCompatActivity {
+public class FavoriteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_favorite);
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.action_nearby);
+        bottomNavigationView.setSelectedItemId(R.id.action_favorite);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
-                        Toast.makeText(MapActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        Intent MainIntent = new Intent(MapActivity.this, ProfileActivity.class);
+                        Toast.makeText(FavoriteActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        Intent MainIntent = new Intent(FavoriteActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites:
-                        Toast.makeText(MapActivity.this, "Business", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MapActivity.this, BusinessActivity.class);
+                        Toast.makeText(FavoriteActivity.this, "Business", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(FavoriteActivity.this, BusinessActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_nearby:
-                        Toast.makeText(MapActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(MapActivity.this, MapActivity.class);
+                        Toast.makeText(FavoriteActivity.this, "Map", Toast.LENGTH_SHORT).show();
+                        Intent mapIntent = new Intent(FavoriteActivity.this, MapActivity.class);
                         startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:
-                        Toast.makeText(MapActivity.this, "favorites", Toast.LENGTH_SHORT).show();
-                        Intent favoritesIntent = new Intent(MapActivity.this, FavoriteActivity.class);
+                        Toast.makeText(FavoriteActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        Intent favoritesIntent = new Intent(FavoriteActivity.this, FavoriteActivity.class);
                         startActivity(favoritesIntent);
                         break;
                 }

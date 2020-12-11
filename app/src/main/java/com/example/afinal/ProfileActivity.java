@@ -60,6 +60,11 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                         Intent mapIntent = new Intent(ProfileActivity.this, MapActivity.class);
                         startActivity(mapIntent);
                         break;
+                    case R.id.action_favorite:
+                        Toast.makeText(ProfileActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        Intent favoritesIntent = new Intent(ProfileActivity.this, FavoriteActivity.class);
+                        startActivity(favoritesIntent);
+                        break;
                 }
                 return true;
             }

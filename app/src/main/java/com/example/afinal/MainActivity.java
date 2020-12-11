@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.action_recents);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -71,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         Toast.makeText(MainActivity.this, "Map", Toast.LENGTH_SHORT).show();
                         Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
                         startActivity(mapIntent);
+                        break;
+                    case R.id.action_favorite:
+                        Toast.makeText(MainActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        Intent favoritesIntent = new Intent(MainActivity.this, FavoriteActivity.class);
+                        startActivity(favoritesIntent);
                         break;
                 }
                 return true;
