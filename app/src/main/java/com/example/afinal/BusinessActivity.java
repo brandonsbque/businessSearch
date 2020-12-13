@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -71,8 +72,8 @@ public class BusinessActivity extends AppCompatActivity {
                         break;
                     case R.id.action_favorite:
                         Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
-                        Intent favoritesIntent = new Intent(BusinessActivity.this, FavoriteActivity.class);
-                        startActivity(favoritesIntent);
+                        Intent favoritesIntent = new Intent(BusinessActivity.this, BusinessDetails.class);
+                        startActivity(favoritesIntent); //make sure to turn this back to FavoriteActivity.class above when finished testing
                         break;
                 }
                 return true;
@@ -102,8 +103,16 @@ public class BusinessActivity extends AppCompatActivity {
         //End of listView stuff
 
 
+
     }
 //end of onCreate
+
+    public void openBusinessDetails(){
+        Intent intent = new Intent(this, BusinessDetails.class);
+        //intent.putExtra(transferLat, latitudeValue);
+        //intent.putExtra(transferLon, longitudeValue);
+        startActivity(intent);
+    }
 
     //ListView Stuff
     private class GetResults extends AsyncTask<Void, Void, Void> {
@@ -187,10 +196,19 @@ public class BusinessActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            ListAdapter adapter = new SimpleAdapter(BusinessActivity.this, contactList,
+            final ListAdapter adapter = new SimpleAdapter(BusinessActivity.this, contactList,
                     R.layout.list_item, new String[]{ "name","completeAddress"},
                     new int[]{R.id.name, R.id.completeAddress});
             lv.setAdapter(adapter);
+
+            //start of business id transfer
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(BusinessActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                }
+            });
+            //end of business id transfer
         }
     }
     //End of ListView Stuff
