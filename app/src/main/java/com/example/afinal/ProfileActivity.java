@@ -57,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                         break;
                     case R.id.action_nearby:
                         Toast.makeText(ProfileActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(ProfileActivity.this, MapActivity.class);
+                        Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
                         startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:

@@ -71,7 +71,7 @@ public class BusinessActivity extends AppCompatActivity {
                         break;
                     case R.id.action_nearby:
                         Toast.makeText(BusinessActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(BusinessActivity.this, MapActivity.class);
+                        Intent mapIntent = new Intent(BusinessActivity.this, MapsActivity.class);
                         startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:

@@ -35,7 +35,7 @@ public class FavoriteActivity extends AppCompatActivity {
                         break;
                     case R.id.action_nearby:
                         Toast.makeText(FavoriteActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(FavoriteActivity.this, MapActivity.class);
+                        Intent mapIntent = new Intent(FavoriteActivity.this, MapsActivity.class);
                         startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:

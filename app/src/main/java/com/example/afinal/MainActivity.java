@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
                     case R.id.action_nearby:
                         Toast.makeText(MainActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
+                        Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);
                         startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:
