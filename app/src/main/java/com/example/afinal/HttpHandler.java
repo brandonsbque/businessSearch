@@ -20,9 +20,13 @@ public class HttpHandler {
 
     public String makeServiceCall(String reqUrl) {
         String response = null;
+        String api_key = "TfF146dfseHj6iOkzv8q0Ks0C49MArBejc00zUuLLkirTXtnsB2oKquz23eHygukkQ62FSG93m50e5P7zNwuq_KsAX_MQkeJE0nCRHLAaio86Wh_VvUsx1nP1l_QX3Yx";
         try {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            //add bearer token
+            conn.addRequestProperty("Authorization", "Bearer " + api_key);
+            //done adding bearer token
             conn.setRequestMethod("GET");
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());

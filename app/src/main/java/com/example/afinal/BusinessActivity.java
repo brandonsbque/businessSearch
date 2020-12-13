@@ -8,6 +8,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -19,17 +22,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BusinessActivity extends AppCompatActivity {
 
     //ListView Stuff
-    private String TAG = MainActivity.class.getSimpleName();
+    private String TAG = BusinessActivity.class.getSimpleName();
     private ListView lv;
 
     ArrayList<HashMap<String, String>> contactList;
     //End of ListView Stuff
+
+    //USER INPUT STUFF
+    EditText inputTerm, inputLocation;
+    String userTerm="";
+    String userLocation="";
+    Button btnSearch;
+    //end of user input stuff
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +79,38 @@ public class BusinessActivity extends AppCompatActivity {
             }
         });
 
+        //user input stuff
+        inputTerm = (EditText)findViewById(R.id.inputTerm);
+        inputLocation = (EditText)findViewById(R.id.inputLocation);
+        btnSearch = (Button)findViewById(R.id.btnSearch);
+        //end of user input stuff
+
         //ListView stuff
         contactList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
 
-        new GetContacts().execute();
+
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new GetResults().execute();
+
+            }
+        });
         //End of listView stuff
+
+
     }
+//end of onCreate
 
     //ListView Stuff
-    private class GetContacts extends AsyncTask<Void, Void, Void> {
+    private class GetResults extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(BusinessActivity.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
+            Toast.makeText(BusinessActivity.this,"Fetching JSON results",Toast.LENGTH_LONG).show();
 
         }
 
@@ -87,7 +118,9 @@ public class BusinessActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String url = "https://api.androidhive.info/contacts/";
+            userTerm = inputTerm.getText().toString();
+            userLocation = inputLocation.getText().toString();
+            String url = "https://api.yelp.com/v3/businesses/search?term=" + userTerm + "&location=" + userLocation;
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -96,34 +129,32 @@ public class BusinessActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("contacts");
+                    JSONArray businesses = jsonObj.getJSONArray("businesses");
 
                     // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        JSONObject c = contacts.getJSONObject(i);
-                        String id = c.getString("id");
-                        String name = c.getString("name");
-                        String email = c.getString("email");
-                        String address = c.getString("address");
-                        String gender = c.getString("gender");
+                    for (int i = 0; i < businesses.length(); i++) {
+                        JSONObject b = businesses.getJSONObject(i);
+                        String id = b.getString("id");
+                        String name = b.getString("name");
 
                         // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
+                        JSONObject location = b.getJSONObject("location");
+                        String address1 = location.getString("address1");
+                        String city = location.getString("city");
+                        String state = location.getString("state");
+                        String zip_code = location.getString("zip_code");
+                        String completeAddress = "" + address1 + ", " + city + ", " + state + " " + zip_code;
 
                         // tmp hash map for single contact
-                        HashMap<String, String> contact = new HashMap<>();
+                        HashMap<String, String> businessData = new HashMap<>();
 
                         // adding each child node to HashMap key => value
-                        contact.put("id", id);
-                        contact.put("name", name);
-                        contact.put("email", email);
-                        contact.put("mobile", mobile);
+                        businessData.put("id", id);
+                        businessData.put("name", name);
+                        businessData.put("completeAddress", completeAddress);
 
                         // adding contact to contact list
-                        contactList.add(contact);
+                        contactList.add(businessData);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -157,8 +188,8 @@ public class BusinessActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             ListAdapter adapter = new SimpleAdapter(BusinessActivity.this, contactList,
-                    R.layout.list_item, new String[]{ "email","mobile"},
-                    new int[]{R.id.email, R.id.mobile});
+                    R.layout.list_item, new String[]{ "name","completeAddress"},
+                    new int[]{R.id.name, R.id.completeAddress});
             lv.setAdapter(adapter);
         }
     }
