@@ -9,6 +9,8 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +37,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
     ImageView profileImage;
     private GoogleApiClient googleApiClient;
     private GoogleSignInOptions gso;
+
+    String theUserEmail = "";
+    public static final String transferUserEmail = "com.example.afinal.theUserEmail";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                     case R.id.action_favorite:
                         Toast.makeText(ProfileActivity.this, "favorites", Toast.LENGTH_SHORT).show();
                         Intent favoritesIntent = new Intent(ProfileActivity.this, FavoriteActivity.class);
+                        favoritesIntent.putExtra(transferUserEmail, theUserEmail);
                         startActivity(favoritesIntent);
                         break;
                 }
@@ -122,6 +129,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
             userName.setText(account.getDisplayName());
             userEmail.setText(account.getEmail());
             userId.setText(account.getId());
+            theUserEmail = account.getEmail();
+            Log.v("hello", theUserEmail); //test
+
+
             try{
                 Glide.with(this).load(account.getPhotoUrl()).into(profileImage);
             }catch (NullPointerException e){

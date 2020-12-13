@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,6 +27,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     private String TAG = FavoriteActivity.class.getSimpleName();
     private ListView lv;
+    TextView favoriteTitle;
 
     ArrayList<HashMap<String, String>> contactList;
 
@@ -59,6 +61,12 @@ public class FavoriteActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        favoriteTitle = (TextView)findViewById(R.id.favoriteTitle);
+
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra(ProfileActivity.transferUserEmail);
+        favoriteTitle.setText("user: " + userID);
 
         contactList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list2);
