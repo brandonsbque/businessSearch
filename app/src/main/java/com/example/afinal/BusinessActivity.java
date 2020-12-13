@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,11 +44,17 @@ public class BusinessActivity extends AppCompatActivity {
     EditText inputTerm, inputLocation;
     String userTerm="";
     String userLocation="";
-    Button btnSearch;
+    Button btnSearch, btnLocation;
     //end of user input stuff
 
     String IDvalue = "";
+    String url = "";
     public static final String transferID = "com.example.afinal.IDvalue";
+
+    GPSTracker gps;
+    double currentLatitude, currentLongitude;
+
+    TextView businessTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +71,15 @@ public class BusinessActivity extends AppCompatActivity {
                         Intent MainIntent = new Intent(BusinessActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
-                    case R.id.action_favorites:
+                    case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
                         Toast.makeText(BusinessActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(BusinessActivity.this, BusinessActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.action_nearby:
-                        Toast.makeText(BusinessActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(BusinessActivity.this, MapsActivity.class);
-                        startActivity(mapIntent);
-                        break;
                     case R.id.action_favorite:
                         Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
-                        Intent favoritesIntent = new Intent(BusinessActivity.this, BusinessDetails.class);
-                        startActivity(favoritesIntent); //make sure to turn this back to FavoriteActivity.class above when finished testing
+                        Intent favoritesIntent = new Intent(BusinessActivity.this, FavoriteActivity.class);
+                        startActivity(favoritesIntent);
                         break;
                 }
                 return true;
@@ -88,6 +90,8 @@ public class BusinessActivity extends AppCompatActivity {
         inputTerm = (EditText)findViewById(R.id.inputTerm);
         inputLocation = (EditText)findViewById(R.id.inputLocation);
         btnSearch = (Button)findViewById(R.id.btnSearch);
+        btnLocation = (Button)findViewById(R.id.btnLocation);
+        businessTitle = (TextView)findViewById((R.id.businessTitle));
         //end of user input stuff
 
         //ListView stuff
@@ -101,6 +105,34 @@ public class BusinessActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 new GetResults().execute();
+
+            }
+        });
+
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // create class object
+                gps = new GPSTracker(BusinessActivity.this);
+
+                // check if GPS enabled
+                if(gps.canGetLocation()){
+
+                    currentLatitude = gps.getLatitude();
+                    currentLongitude = gps.getLongitude();
+
+                    // \n is for new line
+                    //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+                            //+ currentLatitude + "\nLong: " + currentLongitude, Toast.LENGTH_LONG).show();
+
+                    new GetResults().execute();
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
 
             }
         });
@@ -123,7 +155,7 @@ public class BusinessActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(BusinessActivity.this,"Fetching JSON results",Toast.LENGTH_LONG).show();
+            Toast.makeText(BusinessActivity.this,"Fetching results",Toast.LENGTH_LONG).show();
 
         }
 
@@ -133,9 +165,12 @@ public class BusinessActivity extends AppCompatActivity {
             // Making a request to url and getting response
             userTerm = inputTerm.getText().toString();
             userLocation = inputLocation.getText().toString();
-            String url = "https://api.yelp.com/v3/businesses/search?term=" + userTerm + "&location=" + userLocation;
+            if(userLocation.matches("")) {
+                url = "https://api.yelp.com/v3/businesses/search?term=" + userTerm + "&latitude=" + currentLatitude + "&longitude=" + currentLongitude;
+            }else{
+                url = "https://api.yelp.com/v3/businesses/search?term=" + userTerm + "&location=" + userLocation;
+            }
             String jsonStr = sh.makeServiceCall(url);
-
             Log.e(TAG, "Response from url: " + jsonStr);
             if (jsonStr != null) {
                 try {

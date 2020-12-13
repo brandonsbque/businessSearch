@@ -50,15 +50,10 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                         Intent MainIntent = new Intent(ProfileActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
-                    case R.id.action_favorites:
+                    case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
                         Toast.makeText(ProfileActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(ProfileActivity.this, BusinessActivity.class);
                         startActivity(intent);
-                        break;
-                    case R.id.action_nearby:
-                        Toast.makeText(ProfileActivity.this, "Map", Toast.LENGTH_SHORT).show();
-                        Intent mapIntent = new Intent(ProfileActivity.this, MapsActivity.class);
-                        startActivity(mapIntent);
                         break;
                     case R.id.action_favorite:
                         Toast.makeText(ProfileActivity.this, "favorites", Toast.LENGTH_SHORT).show();

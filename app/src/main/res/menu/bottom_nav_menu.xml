@@ -14,12 +14,6 @@
         android:title="Business"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_nearby"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:title="Map"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_favorite"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_favorite_24"

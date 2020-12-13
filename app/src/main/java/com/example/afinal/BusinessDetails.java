@@ -43,8 +43,6 @@ public class BusinessDetails extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
 
-    // GPSTracker class
-    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class BusinessDetails extends AppCompatActivity {
         businessLongitude = (TextView)findViewById(R.id.businessLongitude);
         btnMapView = (Button)findViewById(R.id.btnMapView);
 
-        detailsTitle.setText("ID: " + IDvalue);
+        //detailsTitle.setText("ID: " + IDvalue); only used this line for testing
         String YelpURL = "https://api.yelp.com/v3/businesses/" + IDvalue;
         getData(YelpURL);
 
@@ -92,7 +90,6 @@ public class BusinessDetails extends AppCompatActivity {
     }
 
     public void openMapActivity(){
-        gps = new GPSTracker(BusinessDetails.this);
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra(transferLat, latValue);
         intent.putExtra(transferLon, lonValue);
