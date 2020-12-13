@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -44,6 +45,9 @@ public class BusinessActivity extends AppCompatActivity {
     String userLocation="";
     Button btnSearch;
     //end of user input stuff
+
+    String IDvalue = "";
+    public static final String transferID = "com.example.afinal.IDvalue";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +210,13 @@ public class BusinessActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Toast.makeText(BusinessActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    HashMap<String, String> specificBusiness = contactList.get(position);
+                    String theID = specificBusiness.get("id");
+                    IDvalue = String.valueOf(theID);
+                    Intent intent = new Intent(BusinessActivity.this, BusinessDetails.class);
+                    Log.v("testing", theID);
+                    intent.putExtra(transferID, IDvalue);
+                    startActivity(intent);
                 }
             });
             //end of business id transfer
