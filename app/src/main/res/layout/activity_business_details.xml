@@ -23,6 +23,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="Business Name"
+        app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailsTitle" />
 
@@ -112,4 +114,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/businessLatitude" />
+
+    <Button
+        android:id="@+id/btnFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/businessName"
+        app:layout_constraintTop_toBottomOf="@+id/detailsTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,6 +77,8 @@ public class BusinessDetails extends AppCompatActivity {
         businessLongitude = (TextView)findViewById(R.id.businessLongitude);
         btnMapView = (Button)findViewById(R.id.btnMapView);
 
+
+
         //detailsTitle.setText("ID: " + IDvalue); only used this line for testing
         String YelpURL = "https://api.yelp.com/v3/businesses/" + IDvalue;
         getData(YelpURL);
@@ -87,6 +90,7 @@ public class BusinessDetails extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Brandon Michael Que\nZ23479912", Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
     public void openMapActivity(){
