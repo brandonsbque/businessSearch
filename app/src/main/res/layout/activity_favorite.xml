@@ -7,11 +7,22 @@
     tools:context=".FavoriteActivity">
 
     <TextView
-        android:id="@+id/favoriteTitle"
+        android:id="@+id/favoriteTitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Brandon Que Z23479912"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteTitle" />
+
+    <TextView
+        android:id="@+id/favoriteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,8 +42,8 @@
 
     <ListView
         android:id="@+id/list2"
-        android:layout_width="404dp"
-        android:layout_height="532dp"
+        android:layout_width="410dp"
+        android:layout_height="463dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
@@ -40,5 +51,15 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favoriteTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
+
+    <Button
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="REFRESH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteTitle2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
