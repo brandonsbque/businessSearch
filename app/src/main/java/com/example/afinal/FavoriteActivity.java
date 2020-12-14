@@ -14,7 +14,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,96 +76,43 @@ public class FavoriteActivity extends AppCompatActivity {
         contactList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list2);
 
-        new GetContacts().execute();
-
-    }
-
-    private class GetContacts extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(FavoriteActivity.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            HttpHandler sh = new HttpHandler();
-            // Making a request to url and getting response
-            String url = "https://api.androidhive.info/contacts/";
-            String jsonStr = sh.makeServiceCall(url);
-
-            Log.e(TAG, "Response from url: " + jsonStr);
-            if (jsonStr != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-
-                    // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("contacts");
-
-                    // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        JSONObject c = contacts.getJSONObject(i);
-                        String id = c.getString("id");
-                        String name = c.getString("name");
-                        String email = c.getString("email");
-                        String address = c.getString("address");
-                        String gender = c.getString("gender");
-
-                        // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
-
-                        // tmp hash map for single contact
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        contact.put("id", id);
-                        //contact.put("name", name);
-                        contact.put("name", email);
-                        contact.put("completeAddress", mobile);
-
-                        // adding contact to contact list
-                        contactList.add(contact);
-                    }
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
+        Task<QuerySnapshot> query = FirebaseFirestore.getInstance().collection(userID).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        int count = 0;
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                if (document.exists()) {
+                                    String name = document.getString("Business Name");
+                                    String businessId = document.getString("Business Id");
+                                    String address = document.getString("Address");
+
+
+                                    //Could also do Map<String, Object> myData = documentSnapshot.getData();
+                                    HashMap<String, String> theList = new HashMap<>();
+                                    theList.put("name", name);
+                                    theList.put("businessId", businessId);
+                                    theList.put("address", address);
+                                    contactList.add(theList);
+                                }
+                                ListAdapter adapter = new SimpleAdapter(FavoriteActivity.this, contactList,
+                                        R.layout.list_item, new String[]{"name", "address"},
+                                        new int[]{R.id.name, R.id.completeAddress});
+                                lv.setAdapter(adapter);
+
+                            }
+                        } else {
+                            Log.d("favoriteResult", "Error getting documents: ", task.getException());
+                        }
+                        Log.d("favoriteResult", String.valueOf(count));
                     }
                 });
-            }
 
-            return null;
-        }
+        //new GetContacts().execute();
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            ListAdapter adapter = new SimpleAdapter(FavoriteActivity.this, contactList,
-                    R.layout.list_item, new String[]{ "name","completeAddress"},
-                    new int[]{R.id.name, R.id.completeAddress});
-            lv.setAdapter(adapter);
-        }
     }
+
+
 
 }
