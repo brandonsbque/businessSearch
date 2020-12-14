@@ -57,5 +57,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/poweredBy"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:text="Powered by Yelp!"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="center"
+        android:textSize="15dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

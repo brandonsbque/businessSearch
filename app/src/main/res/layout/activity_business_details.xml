@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BusinessDetails"
-    android:background="#F6F4E6">
+    android:background="#F6F4E6"
+    tools:context=".BusinessDetails">
 
     <TextView
         android:id="@+id/detailsTitle"
@@ -19,53 +19,62 @@
 
     <TextView
         android:id="@+id/businessName"
-        android:layout_width="264dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="371dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="44dp"
         android:text="Business Name"
-        app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailsTitle" />
 
     <TextView
         android:id="@+id/businessRating"
-        android:layout_width="106dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="225dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="4dp"
         android:text="Rating: "
+        android:textAlignment="center"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/businessName" />
 
     <TextView
         android:id="@+id/textLocation"
-        android:layout_width="106dp"
-        android:layout_height="41dp"
+        android:layout_width="297dp"
+        android:layout_height="42dp"
         android:layout_marginTop="16dp"
-        android:text="exact location:"
+        android:text="Brandon Que Z23479912"
+        android:textAlignment="center"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/businessCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/btnFavorite" />
 
     <TextView
         android:id="@+id/businessAddress"
-        android:layout_width="382dp"
-        android:layout_height="60dp"
+        android:layout_width="394dp"
+        android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:text="Address: "
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/businessRating" />
 
     <TextView
         android:id="@+id/businessPhone"
-        android:layout_width="382dp"
-        android:layout_height="60dp"
+        android:layout_width="390dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:text="Phone: "
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,10 +82,13 @@
 
     <TextView
         android:id="@+id/businessCategory"
-        android:layout_width="382dp"
-        android:layout_height="60dp"
+        android:layout_width="402dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:text="Category: "
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,24 +99,28 @@
         android:layout_width="167dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Latitude: "
         app:layout_constraintEnd_toStartOf="@+id/businessLongitude"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/businessCategory"
+        android:textAlignment="center"
+        android:textSize="15dp"/>
 
     <TextView
         android:id="@+id/businessLongitude"
         android:layout_width="167dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Longitude: "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/businessLatitude"
-        app:layout_constraintTop_toBottomOf="@+id/textLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/businessCategory"
+        android:textAlignment="center"
+        android:textSize="15dp"/>
 
     <Button
         android:id="@+id/btnMapView"
@@ -112,7 +128,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="MAPVIEW"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/businessLatitude" />
 
@@ -120,11 +137,11 @@
         android:id="@+id/btnFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="Favorite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/businessName"
-        app:layout_constraintTop_toBottomOf="@+id/detailsTitle" />
+        app:layout_constraintStart_toEndOf="@+id/btnMapView"
+        app:layout_constraintTop_toBottomOf="@+id/businessLongitude" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

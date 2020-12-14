@@ -70,17 +70,17 @@ public class BusinessActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
-                        Toast.makeText(BusinessActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BusinessActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         Intent MainIntent = new Intent(BusinessActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
-                        Toast.makeText(BusinessActivity.this, "Business", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BusinessActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(BusinessActivity.this, BusinessActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.action_favorite:
-                        Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
                         Intent favoritesIntent = new Intent(BusinessActivity.this, FavoriteActivity.class);
                         favoritesIntent.putExtra(transfertheID, userID);
                         startActivity(favoritesIntent);

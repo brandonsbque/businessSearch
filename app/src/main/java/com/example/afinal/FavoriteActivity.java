@@ -55,18 +55,18 @@ public class FavoriteActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
-                        Toast.makeText(FavoriteActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(FavoriteActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         Intent MainIntent = new Intent(FavoriteActivity.this, ProfileActivity.class);
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
-                        Toast.makeText(FavoriteActivity.this, "Business", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(FavoriteActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(FavoriteActivity.this, BusinessActivity.class);
                         intent.putExtra(transferUserID, userID);
                         startActivity(intent);
                         break;
                     case R.id.action_favorite:
-                        Toast.makeText(FavoriteActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(FavoriteActivity.this, "favorites", Toast.LENGTH_SHORT).show();
                         Intent favoritesIntent = new Intent(FavoriteActivity.this, FavoriteActivity.class);
                         startActivity(favoritesIntent);
                         break;
@@ -117,7 +117,7 @@ public class FavoriteActivity extends AppCompatActivity {
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Toast.makeText(FavoriteActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(FavoriteActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
                                         HashMap<String, String> specificBusiness = contactList2.get(position);
                                         String theID = specificBusiness.get("businessId");
                                         favIDvalue = String.valueOf(theID);
