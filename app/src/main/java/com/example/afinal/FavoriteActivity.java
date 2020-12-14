@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -34,7 +36,12 @@ public class FavoriteActivity extends AppCompatActivity {
     private ListView lv;
     TextView favoriteTitle;
 
-    ArrayList<HashMap<String, String>> contactList;
+    ArrayList<HashMap<String, String>> contactList2;
+
+    String favIDvalue = "";
+    String userID = "";
+    public static final String transferFaveID = "com.example.afinal.favIDvalue";
+    public static final String transferUserID = "com.example.afinal.userID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class FavoriteActivity extends AppCompatActivity {
                     case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
                         Toast.makeText(FavoriteActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(FavoriteActivity.this, BusinessActivity.class);
+                        intent.putExtra(transferUserID, userID);
                         startActivity(intent);
                         break;
                     case R.id.action_favorite:
@@ -70,10 +78,14 @@ public class FavoriteActivity extends AppCompatActivity {
         favoriteTitle = (TextView)findViewById(R.id.favoriteTitle);
 
         Intent intent = getIntent();
-        String userID = intent.getStringExtra(ProfileActivity.transferUserEmail);
+        userID = intent.getStringExtra(ProfileActivity.transferUserEmail); //go add if user navigates from business tab
+        if(userID == null){
+            userID = intent.getStringExtra(BusinessActivity.transfertheID); //go add if user navigates from business tab
+        }
+
         favoriteTitle.setText("user: " + userID);
 
-        contactList = new ArrayList<>();
+        contactList2 = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list2);
 
         Task<QuerySnapshot> query = FirebaseFirestore.getInstance().collection(userID).get()
@@ -94,12 +106,28 @@ public class FavoriteActivity extends AppCompatActivity {
                                     theList.put("name", name);
                                     theList.put("businessId", businessId);
                                     theList.put("address", address);
-                                    contactList.add(theList);
+                                    contactList2.add(theList);
                                 }
-                                ListAdapter adapter = new SimpleAdapter(FavoriteActivity.this, contactList,
+                                final ListAdapter adapter = new SimpleAdapter(FavoriteActivity.this, contactList2,
                                         R.layout.list_item, new String[]{"name", "address"},
                                         new int[]{R.id.name, R.id.completeAddress});
                                 lv.setAdapter(adapter);
+
+                                //start of business id transfer
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Toast.makeText(FavoriteActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                                        HashMap<String, String> specificBusiness = contactList2.get(position);
+                                        String theID = specificBusiness.get("businessId");
+                                        favIDvalue = String.valueOf(theID);
+                                        Intent intent = new Intent(FavoriteActivity.this, BusinessDetails.class);
+                                        //Log.v("testing", theID);
+                                        intent.putExtra(transferFaveID, favIDvalue);
+                                        startActivity(intent);
+                                    }
+                                });
+                                //end of business id transfer
 
                             }
                         } else {

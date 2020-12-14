@@ -56,6 +56,9 @@ public class BusinessActivity extends AppCompatActivity {
 
     TextView businessTitle;
 
+    String userID = "";
+    public static final String transfertheID = "com.example.afinal.userID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,7 @@ public class BusinessActivity extends AppCompatActivity {
                     case R.id.action_favorite:
                         Toast.makeText(BusinessActivity.this, "favorites", Toast.LENGTH_SHORT).show();
                         Intent favoritesIntent = new Intent(BusinessActivity.this, FavoriteActivity.class);
+                        favoritesIntent.putExtra(transfertheID, userID);
                         startActivity(favoritesIntent);
                         break;
                 }
@@ -93,6 +97,13 @@ public class BusinessActivity extends AppCompatActivity {
         btnLocation = (Button)findViewById(R.id.btnLocation);
         businessTitle = (TextView)findViewById((R.id.businessTitle));
         //end of user input stuff
+
+        Intent intent = getIntent();
+        userID = intent.getStringExtra(ProfileActivity.transferUserEmail); //go add if user navigates from business tab
+        if(userID == null){
+            userID = intent.getStringExtra(FavoriteActivity.transferUserID); //go add if user navigates from business tab
+        }
+        businessTitle.setText("user: " + userID);
 
         //ListView stuff
         contactList = new ArrayList<>();

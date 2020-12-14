@@ -66,6 +66,8 @@ public class BusinessDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         IDvalue = intent.getStringExtra(BusinessActivity.transferID);
+        if(IDvalue == null){
+        IDvalue = intent.getStringExtra(FavoriteActivity.transferFaveID);}
 
         detailsTitle = (TextView)findViewById(R.id.detailsTitle);
         businessName = (TextView)findViewById(R.id.businessName);

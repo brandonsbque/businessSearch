@@ -59,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements GoogleApiClien
                     case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
                         Toast.makeText(ProfileActivity.this, "Business", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(ProfileActivity.this, BusinessActivity.class);
+                        intent.putExtra(transferUserEmail, theUserEmail);
                         startActivity(intent);
                         break;
                     case R.id.action_favorite:
