@@ -1,5 +1,6 @@
 package com.example.afinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -29,13 +30,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BusinessDetails extends AppCompatActivity {
     String IDvalue = "";
     String latValue = "";
     String lonValue = "";
+    String Baddress = "";
+    String Bname = "";
     TextView detailsTitle, businessName, businessRating, businessAddress, businessPhone, businessCategory, businessLatitude, businessLongitude;
-    Button btnMapView;
+    Button btnMapView, btnFavorite;
     String ACCESS_TOKEN = "TfF146dfseHj6iOkzv8q0Ks0C49MArBejc00zUuLLkirTXtnsB2oKquz23eHygukkQ62FSG93m50e5P7zNwuq_KsAX_MQkeJE0nCRHLAaio86Wh_VvUsx1nP1l_QX3Yx";
 
     public static final String transferLat = "com.example.afinal.latValue";
@@ -43,6 +50,7 @@ public class BusinessDetails extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+
 
 
     @Override
@@ -78,8 +86,13 @@ public class BusinessDetails extends AppCompatActivity {
         businessLatitude = (TextView)findViewById(R.id.businessLatitude);
         businessLongitude = (TextView)findViewById(R.id.businessLongitude);
         btnMapView = (Button)findViewById(R.id.btnMapView);
+        btnFavorite = (Button)findViewById(R.id.btnFavorite);
 
-
+        String userID = intent.getStringExtra(BusinessActivity.transfertheID);
+        if(userID == null){
+            userID = intent.getStringExtra(FavoriteActivity.transferFaveID);
+        }
+        detailsTitle.setText("ID: " + userID);
 
         //detailsTitle.setText("ID: " + IDvalue); only used this line for testing
         String YelpURL = "https://api.yelp.com/v3/businesses/" + IDvalue;
@@ -90,6 +103,32 @@ public class BusinessDetails extends AppCompatActivity {
             public void onClick(View v) {
                 openMapActivity();
                 Toast.makeText(getApplicationContext(), "Brandon Michael Que\nZ23479912", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        final DocumentReference docRef = FirebaseFirestore.getInstance().collection(userID).document(IDvalue);
+
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Map<String, Object> document = new HashMap<>();
+                document.put("Business Name", Bname);
+                document.put("Address", Baddress);
+                document.put("Business Id", IDvalue);
+                //If saving to document is a success
+                docRef.set(document).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("RESULT", "Document has been saved");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("RESULT", "Document has not been saved");
+                    }
+                });
+                Toast.makeText(getApplicationContext(), "Business Saved to Favorites", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -117,13 +156,13 @@ public class BusinessDetails extends AppCompatActivity {
                     String addressState = String.valueOf(mainObject.getString("state"));
                     String addressZip = String.valueOf(mainObject.getString("zip_code"));
 
-                    String Bname = response.getString("name");
+                    Bname = response.getString("name");
                     String Bphone = response.getString("display_phone");
                     latValue = String.valueOf(coordObject.getDouble("latitude"));
                     lonValue = String.valueOf(coordObject.getDouble("longitude"));
                     String Bcategory = object.getString("title");
                     String Brating = response.getString("rating");
-                    String Baddress = address1 + ", " + addressCity + ", " + addressState + " " + addressZip;
+                    Baddress = address1 + ", " + addressCity + ", " + addressState + " " + addressZip;
 
                     businessName.setText(Bname);
                     businessRating.setText("Rating: " + Brating + " / 5.0");

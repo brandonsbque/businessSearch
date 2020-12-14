@@ -261,6 +261,7 @@ public class BusinessActivity extends AppCompatActivity {
                     IDvalue = String.valueOf(theID);
                     Intent intent = new Intent(BusinessActivity.this, BusinessDetails.class);
                     Log.v("testing", theID);
+                    intent.putExtra(transfertheID, userID);
                     intent.putExtra(transferID, IDvalue);
                     startActivity(intent);
                 }
