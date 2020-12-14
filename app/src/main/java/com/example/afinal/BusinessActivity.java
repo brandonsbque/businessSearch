@@ -255,7 +255,7 @@ public class BusinessActivity extends AppCompatActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(BusinessActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BusinessActivity.this, "Business: "+adapter.getItem(position), Toast.LENGTH_SHORT).show();
                     HashMap<String, String> specificBusiness = contactList.get(position);
                     String theID = specificBusiness.get("id");
                     IDvalue = String.valueOf(theID);

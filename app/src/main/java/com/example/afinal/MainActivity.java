@@ -1,8 +1,10 @@
 package com.example.afinal;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,14 +66,52 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         startActivity(MainIntent);
                         break;
                     case R.id.action_favorites://i didnt realize this was named favorites, but im too deep to fix it now
-                        Toast.makeText(MainActivity.this, "Business", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, BusinessActivity.class);
-                        startActivity(intent);
+                        //Toast.makeText(MainActivity.this, "Business", Toast.LENGTH_SHORT).show();
+                        //Intent intent = new Intent(MainActivity.this, BusinessActivity.class);
+                        //startActivity(intent);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        // Set Alert Title
+                        builder.setTitle("Alert!");
+                        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                        builder.setCancelable(false);
+                        //Set the message show for the Alert time
+                        builder.setMessage("You must first login to be able to use this feature");
+                        // Set the positive button with yes name OnClickListener method is use of DialogInterface interface.
+                        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //When the user click yes button then app will close
+                                dialog.cancel();
+                            }
+                        });
+                        //Create the Alert dialog
+                        AlertDialog alertDialog = builder.create();
+                        //Show the Alert Dialog box
+                        alertDialog.show();
                         break;
                     case R.id.action_favorite:
-                        Toast.makeText(MainActivity.this, "favorites", Toast.LENGTH_SHORT).show();
-                        Intent favoritesIntent = new Intent(MainActivity.this, FavoriteActivity.class);
-                        startActivity(favoritesIntent);
+                        //Toast.makeText(MainActivity.this, "favorites", Toast.LENGTH_SHORT).show();
+                        //Intent favoritesIntent = new Intent(MainActivity.this, FavoriteActivity.class);
+                        //startActivity(favoritesIntent);
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                        // Set Alert Title
+                        builder2.setTitle("Alert!");
+                        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                        builder2.setCancelable(false);
+                        //Set the message show for the Alert time
+                        builder2.setMessage("You must first login to be able to use this feature");
+                        // Set the positive button with yes name OnClickListener method is use of DialogInterface interface.
+                        builder2.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //When the user click yes button then app will close
+                                dialog.cancel();
+                            }
+                        });
+                        //Create the Alert dialog
+                        AlertDialog alertDialog2 = builder2.create();
+                        //Show the Alert Dialog box
+                        alertDialog2.show();
                         break;
                 }
                 return true;
